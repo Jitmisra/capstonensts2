@@ -1,10 +1,9 @@
 import '../styles/Blog.css';
-
-function Blog() {
+ function Blog() {
   const blogPosts = [
     {
       id: 1,
-      title: "Why Playing Trivia Games Makes You Smarter",
+      title: "Why Playing Trivia Games Makes You Smarter jjuja   aiuia   ii  nn iiiw uiias ur iia iie iii rii ii iii i eooi iie iii  iisi diie siisi iiiie  ooooe  oo   j i  wiiwiw  ssi   uuue   eieiie sjjsjjje ",
       date: "June 6, 2025",
       author: "Agnik Misra",
       content: "Trivia quizzes are more than just fun – they challenge your memory and boost brain power. Regularly playing trivia helps improve cognitive function, memory retention, and even decision-making skills. Whether it's sports, science, or history, testing your knowledge keeps your mind active!",
@@ -24,7 +23,7 @@ function Blog() {
       date: "June 6, 2025",
       author: "Agnik Misra",
       content: "Our built-in timer gives you 30 seconds to answer each question — just enough to think, but not enough to Google! It adds pressure, improves quick thinking, and makes the game feel like a real challenge.",
-      image: "../../assets/images/blog/blogimage3.jpeg"
+      image: "../../assets/images/blog/blogimage3.jpegajjaja"
     },
     {
       id: 4,
