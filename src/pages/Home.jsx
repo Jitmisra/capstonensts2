@@ -1,6 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
 
 function Home() {
+  const navigate = useNavigate();
+  
   const categories = [
     { id: 1, name: 'General Knowledge', description: 'A mix of everything!', image: '../../assets/images/quiz/quizimage1.png' },
     { id: 2, name: 'Science & Nature', description: 'Facts about physics, chemistry, biology, and more.', image: '../../assets/images/quiz/quizimage2.png' },
@@ -12,6 +15,15 @@ function Home() {
     { id: 8, name: 'Technology', description: 'Computers, the internet, and inventions.', image: '../../assets/images/quiz/quizimage8.png' },
     { id: 9, name: 'Music', description: 'From classical to pop culture.', image: '../../assets/images/quiz/quizimage9.png' },
   ];
+
+  const handleStartQuiz = (categoryId) => {
+    navigate(`/quiz/${categoryId}`);
+  };
+  
+  const handleStartRandomQuiz = () => {
+    const randomCategoryId = Math.floor(Math.random() * 9) + 1;
+    navigate(`/quiz/${randomCategoryId}`);
+  };
 
   return (
     <div className="home-container">
@@ -30,14 +42,21 @@ function Home() {
               </div>
               <h3>{category.name}</h3>
               <p>{category.description}</p>
-              <button className="play-button">Play {category.name}</button>
+              <button 
+                className="play-button"
+                onClick={() => handleStartQuiz(category.id)}
+              >
+                Play {category.name}
+              </button>
             </div>
           ))}
         </div>
       </section>
       
       <section className="cta-section">
-        <button className="cta-button">Start Quiz Now!</button>
+        <button className="cta-button" onClick={handleStartRandomQuiz}>
+          Start Random Quiz Now!
+        </button>
       </section>
       
       <section className="taglines-section">
