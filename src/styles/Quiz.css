@@ -274,18 +274,86 @@
   color: #46211A;
 }
 
-.play-again-button {
-  background-color: #A43820;
-  color: white;
-  padding: 1rem 2.5rem;
-  font-size: 1.2rem;
-  border-radius: 50px;
-  border: none;
-  font-weight: 600;
+.score-saved-message {
+  background: #F1F5F3;
+  border: 1px solid #A43820;
+  color: #46211A;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  text-align: center;
 }
 
-.play-again-button:hover {
-  background-color: #46211A;
+.auth-prompt {
+  background: #fef3c7;
+  border: 1px solid #f59e0b;
+  color: #92400e;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.auth-button {
+  background: linear-gradient(135deg, #46211A 0%, #A43820 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: transform 0.2s;
+}
+
+.auth-button:hover {
+  transform: translateY(-1px);
+}
+
+.result-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.play-again-button,
+.leaderboard-button {
+  background: linear-gradient(135deg, #A43820, #D2691E);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.leaderboard-button {
+  background: linear-gradient(135deg, #46211A 0%, #A43820 100%);
+}
+
+.play-again-button:hover,
+.leaderboard-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 480px) {
+  .result-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .play-again-button,
+  .leaderboard-button {
+    width: 100%;
+    max-width: 250px;
+  }
 }
 
 .mock-data-banner {

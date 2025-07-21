@@ -59,14 +59,62 @@
   background-color: #A43820;
 }
 
+.auth-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-greeting {
+  color: #F1D3B2;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.logout-button {
+  background: #A43820;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.logout-button:hover {
+  background: #8b2f1a;
+}
+
+.auth-link {
+  background: #A43820;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.auth-link:hover {
+  background: #8b2f1a;
+}
+
 @media (max-width: 768px) {
   .header {
     flex-direction: column;
     padding: 1rem;
+    gap: 1rem;
   }
   
   .logo {
-    margin-bottom: 1rem;
+    margin-bottom: 0;
   }
   
   .navigation ul {
@@ -78,5 +126,20 @@
   .logo-icon {
     width: 35px;
     height: 35px;
+  }
+  
+  .auth-section {
+    order: -1;
+    align-self: flex-end;
+  }
+  
+  .user-greeting {
+    font-size: 0.8rem;
+  }
+  
+  .logout-button,
+  .auth-link {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
   }
 }

@@ -66,6 +66,19 @@ function Home() {
           <div className="tagline">👥 Perfect for solo or group play!</div>
         </div>
       </section>
+
+      <section className="leaderboard-cta">
+        <div className="cta-content">
+          <h3>🏆 Think You're the Quiz Master?</h3>
+          <p>Check out the leaderboard and see how you rank against other players!</p>
+          <button 
+            className="leaderboard-cta-button"
+            onClick={() => navigate('/leaderboard')}
+          >
+            View Leaderboard
+          </button>
+        </div>
+      </section>
     </div>
   );
 }

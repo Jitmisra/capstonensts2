@@ -1,10 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { saveQuizScore } from '../services/scoreService';
 import '../styles/Quiz.css';
 
 function Quiz() {
   const { categoryId } = useParams();
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
   
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -18,20 +21,22 @@ function Quiz() {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [retryCount, setRetryCount] = useState(0);
   const [retryTimeLeft, setRetryTimeLeft] = useState(0);
+  const [quizStartTime, setQuizStartTime] = useState(null);
+  const [scoreSaved, setScoreSaved] = useState(false);
   
   const isFetchingRef = useRef(false);
   const retryTimerRef = useRef(null);
   
   const categoryApiMap = {
-    1: 'https://opentdb.com/api.php?amount=10&category=9',
-    2: 'https://opentdb.com/api.php?amount=10&category=17',
-    3: 'https://opentdb.com/api.php?amount=10&category=23',
-    4: 'https://opentdb.com/api.php?amount=10&category=11',
-    5: 'https://opentdb.com/api.php?amount=10&category=21',
-    6: 'https://opentdb.com/api.php?amount=10&category=22',
-    7: 'https://opentdb.com/api.php?amount=10&category=25',
-    8: 'https://opentdb.com/api.php?amount=10&category=18',
-    9: 'https://opentdb.com/api.php?amount=10&category=12',
+    1: { url: 'https://opentdb.com/api.php?amount=10&category=9', name: 'General Knowledge' },
+    2: { url: 'https://opentdb.com/api.php?amount=10&category=17', name: 'Science & Nature' },
+    3: { url: 'https://opentdb.com/api.php?amount=10&category=23', name: 'History' },
+    4: { url: 'https://opentdb.com/api.php?amount=10&category=11', name: 'Entertainment: Film' },
+    5: { url: 'https://opentdb.com/api.php?amount=10&category=21', name: 'Sports' },
+    6: { url: 'https://opentdb.com/api.php?amount=10&category=22', name: 'Geography' },
+    7: { url: 'https://opentdb.com/api.php?amount=10&category=25', name: 'Art' },
+    8: { url: 'https://opentdb.com/api.php?amount=10&category=18', name: 'Science: Computers' },
+    9: { url: 'https://opentdb.com/api.php?amount=10&category=12', name: 'Entertainment: Music' },
   };
   
   const getSessionToken = async () => {
@@ -78,7 +83,7 @@ function Quiz() {
       let token = localStorage.getItem('trivia_token');
       if (!token) token = await getSessionToken();
       
-      let apiUrl = categoryApiMap[categoryId];
+      let apiUrl = categoryApiMap[categoryId]?.url;
       if (!apiUrl) throw new Error('Invalid category');
       if (token) apiUrl += `&token=${token}`;
       
@@ -144,6 +149,7 @@ function Quiz() {
         
         setQuestions(processedQuestions);
         setRetryCount(0);
+        setQuizStartTime(new Date());
         
       } catch (err) {
         clearTimeout(timeoutId);
@@ -208,6 +214,30 @@ function Quiz() {
       setTimeLeft(30);
     } else {
       setQuizFinished(true);
+      saveScoreToFirebase();
+    }
+  };
+
+  const saveScoreToFirebase = async () => {
+    if (!currentUser || scoreSaved) return;
+
+    try {
+      const timeSpent = quizStartTime ? Math.floor((new Date() - quizStartTime) / 1000) : 0;
+      const categoryInfo = categoryApiMap[categoryId];
+      
+      const quizData = {
+        score: score,
+        totalQuestions: questions.length,
+        correctAnswers: correctAnswers,
+        categoryId: categoryId,
+        category: categoryInfo?.name || 'Unknown',
+        timeSpent: timeSpent
+      };
+
+      await saveQuizScore(currentUser.uid, quizData);
+      setScoreSaved(true);
+    } catch (error) {
+      console.error('Failed to save score:', error);
     }
   };
   
@@ -300,8 +330,28 @@ function Quiz() {
               <span className="stat-label">Skipped</span>
             </div>
           </div>
+
+          {currentUser && (
+            <div className="score-saved-message">
+              <p>✅ Your score has been saved to the leaderboard!</p>
+            </div>
+          )}
+
+          {!currentUser && (
+            <div className="auth-prompt">
+              <p>Sign in to save your score and appear on the leaderboard!</p>
+              <button onClick={() => navigate('/auth')} className="auth-button">
+                Sign In / Sign Up
+              </button>
+            </div>
+          )}
           
-          <button className="play-again-button" onClick={resetQuiz}>Play Again</button>
+          <div className="result-actions">
+            <button className="play-again-button" onClick={resetQuiz}>Play Again</button>
+            <button className="leaderboard-button" onClick={() => navigate('/leaderboard')}>
+              View Leaderboard
+            </button>
+          </div>
         </div>
       </div>
     );
