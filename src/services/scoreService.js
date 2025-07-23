@@ -10,7 +10,6 @@ export const saveQuizScore = async (userId, quizData) => {
   try {
     const userRef = doc(db, 'users', userId);
     
-    // First check if user document exists
     const userDoc = await getDoc(userRef);
     if (!userDoc.exists()) {
       console.error('User document does not exist');
@@ -28,7 +27,6 @@ export const saveQuizScore = async (userId, quizData) => {
       timeSpent: quizData.timeSpent || 0
     };
 
-    // Update user document with new score
     await updateDoc(userRef, {
       totalScore: increment(quizData.score),
       quizzesCompleted: increment(1),
@@ -72,7 +70,7 @@ export const getLeaderboard = async (limit = 50) => {
     const leaderboard = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      if (data.totalScore > 0) { // Only include users with scores
+      if (data.totalScore > 0) { 
         leaderboard.push({
           id: doc.id,
           ...data

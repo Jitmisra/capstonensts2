@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #46211A 0%, #A43820 100%);
+  background: #F1D3B2;
   padding: 1rem;
 }
 
@@ -121,7 +121,8 @@
 }
 
 .switch-button:hover {
-  color: #46211A;
+  background: #46211A;
+  color: #F1D3B2;
 }
 
 .auth-footer {

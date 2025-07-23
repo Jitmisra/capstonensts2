@@ -88,7 +88,7 @@
 }
 
 .tab:hover {
-  color: #374151;
+  color: #F1D3B2;
 }
 
 .leaderboard-content {
@@ -321,4 +321,10 @@
   .rank-1, .rank-2, .rank-3 {
     font-size: 1.5rem;
   }
+}
+
+.user-info h3,
+.stat-item .stat-value,
+.stat-item .stat-label {
+  color: #F1D3B2 !important;
 }

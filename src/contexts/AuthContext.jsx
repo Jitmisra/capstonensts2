@@ -21,11 +21,7 @@ export function AuthProvider({ children }) {
 
   async function signup(email, password, displayName) {
     const result = await createUserWithEmailAndPassword(auth, email, password);
-    
-    // Update profile with display name
     await updateProfile(result.user, { displayName });
-    
-    // Create user document in Firestore
     await setDoc(doc(db, 'users', result.user.uid), {
       uid: result.user.uid,
       email: email,

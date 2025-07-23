@@ -11,7 +11,6 @@ function Auth() {
   const [displayName, setDisplayName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
   const { signup, login } = useAuth();
   const navigate = useNavigate();
 
